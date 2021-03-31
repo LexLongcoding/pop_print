@@ -135,7 +135,7 @@ class Order(models.Model):
     buyer_city = models.CharField(max_length=255)
     buyer_state = models.CharField(max_length=255)
     buyer_zip = models.CharField(max_length=255)
-    buyer_CC = models.IntegerField(max_length = 10)
+    buyer_CC = models.IntegerField(max_length = 16)
     buyer_securtiy = models.IntegerField(max_length = 3)
     buyer_exp = models.DateTimeField()
     recipiant_name = models.CharField(max_length=255)
