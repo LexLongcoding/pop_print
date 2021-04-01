@@ -1,0 +1,18 @@
+.contactTop{
+    color: white;
+    font-size: 0.7rem;
+}
+
+a.navbar-brand, p.card-text, h1{
+    font-size: 1.5rem;
+    font-family: 'Righteous', cursive;
+}
+
+.card-body{
+    font-size: 0.8rem;
+}
+
+.card:hover{
+    box-shadow: 0 0 5px #888;
+
+}
