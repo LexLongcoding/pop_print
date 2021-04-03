@@ -1,3 +1,4 @@
+
 .contactTop{
     color: white;
     font-size: 0.7rem;
@@ -15,4 +16,10 @@ a.navbar-brand, p.card-text, h1{
 .card:hover{
     box-shadow: 0 0 5px #888;
 
+}
+#wrap{
+    margin: 0px auto;
+    width: 950px;
+    font-family: sans-serif;
+    padding: 25px;
 }
