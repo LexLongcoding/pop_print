@@ -119,7 +119,7 @@ def update_product(request, product_id):
             update_product.save()
         return redirect('/view_products')
 
-def shop(request):
+def catalogue(request):
     return render(request, 'shop.html')
 
 def create_order(request):
