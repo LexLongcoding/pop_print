@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Category Page{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row bg-light border-bottom">
+        <div class="col p-3">
+            <h1>CATEGORY: {{ category }}</h1>
+        </div>
+    </div>
+
+    <div class="row p-4 justify-content-center">
+        {% for item in allProducts %}
+        <div class="card p-2 m-1" style="width: 12rem;">
+            <a href="/bookDetails/{{ item.id }}">
+                {% if category == 'Comic' %}
+                <img src="{% static 'img/genericComic.jpeg' %}" class="card-img-top" alt="...">
+                {% elif category == 'Fiction' %}
+                <img src="{% static 'img/genericFiction.png' %}" class="card-img-top" alt="...">
+                {% elif category == 'Non-Fiction' %}
+                <img src="{% static 'img/genericNonFiction.png' %}" class="card-img-top" alt="...">
+                {% else %}
+                <img src="{% static 'img/genericMagazine.jpg' %}" class="card-img-top" alt="...">
+                {% endif %}
+            </a>
+                <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="book-text">${{ item.price }}</p>
+                <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        
+</div>
+
+
+{% endblock %}

@@ -23,3 +23,19 @@ a.navbar-brand, p.card-text, h1{
     font-family: sans-serif;
     padding: 25px;
 }
+
+div.userForm{
+    max-width: 600px;
+}
+
+div.formImage{
+    background-color: #e6e7e9;
+}
+
+span.bookInfo{
+    font-size: 1.8rem;
+}
+
+img.productDetails{
+    max-height: 250px
+}
