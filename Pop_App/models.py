@@ -118,7 +118,7 @@ class Product(models.Model):
     description = models.CharField(max_length=255)
     price = models.DecimalField(decimal_places=2, max_digits=6)
     created_at = models.DateTimeField(auto_now_add=True)
-    # product_added_by = models.ForeignKey(Admin, related_name='products_added')
+    product_added_by = models.ForeignKey(Admin, related_name='products_added', on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     favorited_by = models.ManyToManyField(User, related_name='favorited_products')
     #included_in   <= Product is included in orders.   
@@ -129,7 +129,7 @@ class Order(models.Model):
     total_price = models.DecimalField(decimal_places=2, max_digits=6)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # ordered_by = models.ForeignKey(User, related_name='user_orders', on_delete=models.SET_NULL)
+    ordered_by = models.ForeignKey(User, related_name='user_orders', on_delete=models.CASCADE)
     buyer_name = models.CharField(max_length=255)
     buyer_address = models.CharField(max_length=255)
     buyer_city = models.CharField(max_length=255)
