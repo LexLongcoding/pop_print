@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Full Catalogue{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row bg-light border-bottom">
+        <div class="col p-3">
+            <h1>FULL CATALOGUE</h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Cart</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in allP %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>${{ item.price }}</td>
+                    <td><a href="">Add to Cart</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -37,7 +37,7 @@ class UserManager(models.Manager):
         user = users[0]
         return bcrypt.checkpw(password.encode(), user.password.encode())
 
-        def register(self, form):
+    def register(self, form):
         pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
         return self.create(
             first_name = form['first_name'],
@@ -83,11 +83,11 @@ class AdminManager(models.Manager):
         return bcrypt.checkpw(password.encode(), user.password.encode())
 
         def register(self, form):
-        pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
-        return self.create(
-            email = form['email'],
-            password = pw,
-        )
+            pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
+            return self.create(
+                email = form['email'],
+                password = pw,
+            )
 
 class Admin(models.Model):
     email = models.EmailField(unique=True)
@@ -114,11 +114,11 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    category = models.Charfield(max_length =255)
+    category = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     price = models.DecimalField(decimal_places=2, max_digits=6)
     created_at = models.DateTimeField(auto_now_add=True)
-    product_added_by = models.ForeignKey(Admin, related_name='products_added')
+    # product_added_by = models.ForeignKey(Admin, related_name='products_added')
     updated_at = models.DateTimeField(auto_now=True)
     favorited_by = models.ManyToManyField(User, related_name='favorited_products')
     #included_in   <= Product is included in orders.   
@@ -129,18 +129,18 @@ class Order(models.Model):
     total_price = models.DecimalField(decimal_places=2, max_digits=6)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    ordered_by = models.ForeignKey(User, related_name='user_orders', on_delete=models.SET_NULL)
+    # ordered_by = models.ForeignKey(User, related_name='user_orders', on_delete=models.SET_NULL)
     buyer_name = models.CharField(max_length=255)
     buyer_address = models.CharField(max_length=255)
     buyer_city = models.CharField(max_length=255)
     buyer_state = models.CharField(max_length=255)
-    buyer_zip = models.IntegerField(max_length=5)
-    buyer_CC = models.IntegerField(max_length = 16)
-    buyer_securtiy = models.IntegerField(max_length = 3)
+    buyer_zip = models.IntegerField()
+    buyer_CC = models.IntegerField()
+    buyer_securtiy = models.IntegerField()
     buyer_exp = models.DateField()
     recipiant_name = models.CharField(max_length=255)
     recipiant_address = models.CharField(max_length=255)
     recipiant_city = models.CharField(max_length=255)
     recipiant_state = models.CharField(max_length=255)
-    recipiant_zip = models.IntegerField(max_length=5)
+    recipiant_zip = models.IntegerField()
 # Create your models here.

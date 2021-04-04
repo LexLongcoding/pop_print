@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Book Details{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <a href="/category/{{ bookInfo.category }}"><- Back to {{ bookInfo.category }} list</a>
+        </div>
+
+    </div>
+    <div class="row mt-2 pt-2 border-bottom">
+        <div class="col">
+            <div class="row">
+                <div class="col-auto">
+                    <span class="bookInfo">Title: {{ bookInfo.title }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Price: {{ bookInfo.price }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-auto">
+                    <span>{{ bookInfo.description }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-bottom">
+        <div class="col">
+            {% if category == 'Comic' %}
+            <img class="productDetails" src="{% static 'img/genericComic.jpeg' %}" alt="Generic placeholder image" id='cover'>
+            {% elif category == 'Fiction' %}
+            <img class="productDetails" src="{% static 'img/genericFiction.png' %}" alt="Generic placeholder image" id='cover'>
+            {% elif category == 'Non-Fiction' %}
+            <img class="productDetails" src="{% static 'img/genericNonFiction.png' %}" alt="Generic non-fiction image" id='cover'>
+            {% else %}
+            <img class="productDetails" src="{% static 'img/genericMagazine.jpg' %}" alt="Generic placeholder image" id='cover'>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <button class="btn btn-primary btn-lg btn-block">Add to Cart</button>
+            <button class="btn btn-primary btn-lg btn-block">Add to Favorites</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

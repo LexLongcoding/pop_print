@@ -24,3 +24,21 @@ a.navbar-brand, p.card-text, h1{
     padding: 25px;
 }
 
+<<<<<<< HEAD
+=======
+div.userForm{
+    max-width: 600px;
+}
+
+div.formImage{
+    background-color: #e6e7e9;
+}
+
+span.bookInfo{
+    font-size: 1.8rem;
+}
+
+img.productDetails{
+    max-height: 250px
+}
+>>>>>>> ec61b77b9c3d1c1da30f2655e8df05c7837208db
