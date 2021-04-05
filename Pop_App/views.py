@@ -67,7 +67,7 @@ def profile(request, user_id):
     if not user:
         return redirect('/')
     context = {
-        user = User.objects.get(id=user_id)
+        'user' : User.objects.get(id=user_id)
     }
     return render(request, 'profile.html', context)
 
@@ -110,14 +110,14 @@ def edit_product(request, product_id):
 
 def update_product(request, product_id):
     errors = Admin.objects.update_validate(request.POST)
-        if request.method == "POST":
-            update_product = Product.objects.get(id=product_id)
-            update_product.title = request.POST['title']
-            update_product.category = request.POST['category']
-            update_product.description = request.POST['description']
-            update_product.price = request.POST['price']
-            update_product.save()
-        return redirect('/view_products')
+    if request.method == "POST":
+        update_product = Product.objects.get(id=product_id)
+        update_product.title = request.POST['title']
+        update_product.category = request.POST['category']
+        update_product.description = request.POST['description']
+        update_product.price = request.POST['price']
+        update_product.save()
+    return redirect('/view_products')
 
 def catalogue(request):
     return render(request, 'shop.html')
