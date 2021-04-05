@@ -147,8 +147,8 @@ def cart(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user = User.objects.get(id=request.session['user_id'])
-    user_trips = Trip.objects.filter(trip_creator_id=user.id)
-    other_trips = Trip.objects.exclude(trip_creator_id=user.id)
+    user_orders = Order.objects.filter(ordered_by=user.id)
+    other_orders = Order.objects.exclude(ordered_by=user.id)
     context = {
         'user': user,
         "user_orders": user_orders,
