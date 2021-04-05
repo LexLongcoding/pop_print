@@ -18,7 +18,7 @@ urlpatterns = [
     #path('category/<str:category>', views.categoryPage),
     path('catalogue', views.catalogue),
     path('createOrder', views.create_order),
-    path('placeOrder', views.place_order),
+    #path('placeOrder', views.place_order),
     path('cart', views.cart),
     path('editOrder', views.edit_order),
     path('updateOrder', views.update_order),
