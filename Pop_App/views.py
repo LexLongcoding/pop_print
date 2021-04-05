@@ -123,17 +123,26 @@ def catalogue(request):
     return render(request, 'shop.html')
 
 def create_order(request):
-    pass
+    order = Order.objects.create(
+        ordered_products = request.POST['ordered_products'],
+        ordered_by = User.objects.get(id=request.session['user_id'])
 
-def place_order(request):
-    pass
 
-def cart(request):
-    # context = {
-    #     'order': all items ordered
-    # }
-    return render(request, 'cart.html')
-    # add context to return
+    )
+    order.save()
+    if 'user_id' not in request.session:
+        return redirect('/')
+    user = User.objects.get(id=request.session['user_id'])
+    user_orders = Order.objects.filter(ordered_by=user.id)
+    other_orders = Order.objects.exclude(ordered_by=user.id)
+    context = {
+        "user": user,
+        "user_orders": user_orders,
+        "other_orders": other_orders
+        
+    }
+    return render(request, 'cart.html', context)
+    
 
 def edit_order(request, order_id):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
