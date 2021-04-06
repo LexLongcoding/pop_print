@@ -7,13 +7,11 @@ EMAIL_REGEX = re.compile('^[_a-z0-9-]+(.[_a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a
 class UserManager(models.Manager):
     def validate_user(self, form):
         errors = {}
-        if len(form['username']) < 2:
+        if len(form.get('firstName')) < 2:
             errors['username'] = 'First Name must be at least 2 characters'
+        if len(form.get('lastName')) < 2:
+            errors['username'] = 'Last Name must be at least 2 characters'
         
-        username_check = self.filter(username=form['username'])
-        if username_check:
-            errors['username'] = "Username already in use"
-
         if not EMAIL_REGEX.match(form['email']):
             errors['email'] = 'Invalid Email Address'
         
@@ -40,8 +38,8 @@ class UserManager(models.Manager):
     def register(self, form):
         pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
         return self.create(
-            first_name = form['first_name'],
-            last_name = form['last_name'],
+            first_name = form['firstName'],
+            last_name = form['lastName'],
             email = form['email'],
             password = pw,
         )
