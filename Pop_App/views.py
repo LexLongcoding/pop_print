@@ -22,7 +22,7 @@ def user_register(request):
             user = User.objects.register(request.POST)
             request.session['user_id'] = user.id
             request.session['user_name'] = user.first_name
-        return redirect('/profile')
+        return redirect('/')
 
 def user_login(request):
     if request.method == "GET":
@@ -33,7 +33,7 @@ def user_login(request):
     user = User.objects.get(email=request.POST['email'])
     request.session['user_id'] = user.id
     request.session['user_name'] = user.first_name
-    return redirect('/profile')
+    return redirect('/')
 
 def admin_register(request):
     '''if request.method == "GET":
@@ -64,10 +64,10 @@ def profile(request):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
     if not user:
         return redirect('/userLogin')
-    # context = {
-    #     'user' : User.objects.get(id=user_id)
-    # }
-    return render(request, 'profile.html')
+    context = {
+        'user' : User.objects.get(id=request.session['user_id'])
+    }
+    return render(request, 'profile.html', context)
 
 def adminDash(request):
     return render(request, 'adminDash.html')
