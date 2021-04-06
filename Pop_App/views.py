@@ -11,12 +11,12 @@ def userAccess(request):
 
 def user_register(request):
     if request.method == "GET":
-        return redirect('/userRegister')
-    errors = User.objects.validate(request.POST)
+        return redirect('/userAccess')
+    errors = User.objects.validate_user(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/userRegister')
+        return redirect('/userAccess')
     else:
         if request.method == "POST":
             user = User.objects.register(request.POST)
@@ -26,10 +26,10 @@ def user_register(request):
 
 def user_login(request):
     if request.method == "GET":
-        return redirect('/userLogin')
-    if not User.objects.authenticate(request.POST['email'], request.POST['password']):
+        return redirect('/userAccess')
+    if not User.objects.authenticate_user(request.POST['email'], request.POST['password']):
         messages.error(request, 'Invalid Email/Password')
-        return redirect('/userLogin')
+        return redirect('/userAccess')
     user = User.objects.get(email=request.POST['email'])
     request.session['user_id'] = user.id
     request.session['user_name'] = user.first_name
@@ -60,14 +60,14 @@ def logout(request):
     request.session.clear()
     return redirect('/userLogin')
 
-def profile(request, user_id):
+def profile(request):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
     if not user:
         return redirect('/userLogin')
-    context = {
-        'user' : User.objects.get(id=user_id)
-    }
-    return render(request, 'profile.html', context)
+    # context = {
+    #     'user' : User.objects.get(id=user_id)
+    # }
+    return render(request, 'profile.html')
 
 def adminDash(request):
     return render(request, 'adminDash.html')
@@ -152,7 +152,7 @@ def create_order(request):
     
 def cart(request):
     if 'user_id' not in request.session:
-        return redirect('/')
+        return redirect('/userAccess')
     user = User.objects.get(id=request.session['user_id'])
     user_orders = Order.objects.filter(ordered_by=user.id)
     other_orders = Order.objects.exclude(ordered_by=user.id)
