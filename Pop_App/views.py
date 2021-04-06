@@ -36,30 +36,21 @@ def user_login(request):
     return redirect('/profile')
 
 def admin_register(request):
-    if request.method == "GET":
+    '''if request.method == "GET":
         return redirect('/adminRegister')
     errors = Admin.objects.validate(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/adminRegister')
-    else:
-        if request.method == "POST":
-            admin = Admin.objects.register(request.POST)
-            request.session['admin_id'] = admin.id
-            request.session['user_name'] = admin.first_name
-        return redirect('/adminDash')
+        return redirect('/adminRegister')'''
+    if request.method == "POST":
+        admin = Admin.objects.register(request.POST)
+        request.session['admin_id'] = admin.id
+        request.session['email'] = admin.email
+    return render(request, 'adminDash.html')
 
 def admin_login(request):
-    if request.method == "GET":
-        return redirect('/adminLogin')
-    if not Admin.objects.authenticate(request.POST['email'], request.POST['password']):
-        messages.error(request, 'Invalid Email/Password')
-        return redirect('/adminLogin')
-    admin = Admin.objects.get(email=request.POST['email'])
-    request.session['admin_id'] = admin.id
-    request.session['user_name'] = admin.first_name
-    return redirect('/adminDash')
+    return render(request, 'adminRegister.html')
 
 def logout(request):
     request.session.clear()

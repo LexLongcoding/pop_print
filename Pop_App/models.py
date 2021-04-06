@@ -82,12 +82,12 @@ class AdminManager(models.Manager):
         admin = admins[0]
         return bcrypt.checkpw(password.encode(), user.password.encode())
 
-        def register(self, form):
-            pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
-            return self.create(
-                email = form['email'],
-                password = pw,
-            )
+    def register(self, form):
+        pw = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt()).decode()
+        return self.create(
+            email = form['email'],
+            password = pw,
+        )
 
 class Admin(models.Model):
     email = models.EmailField(unique=True)
