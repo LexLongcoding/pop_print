@@ -75,13 +75,13 @@ def adminDash(request):
 def add_product(request):
     admin = None if 'admin_id' not in request.session else Admin.objects.get(id=request.session['admin_id'])
     if not admin:
-        return redirect('/adminLogin')
+        return redirect('/admin_LogReg')
     return render(request, 'add_product.html')
 
 def create_product(request):
-    user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
-    if not user:
-        return redirect('/adminLogin')
+    admin = None if 'admin_id' not in request.session else Admin.objects.get(id=request.session['admin_id'])
+    if not admin:
+        return redirect('/admin_LogReg')
     if request.method == 'POST':
         errors = Products.objects.validate(request.POST)
         if len(errors) > 0:
@@ -94,7 +94,7 @@ def create_product(request):
 def view_products(request):
     admin = None if 'admin_id' not in request.session else Admin.objects.get(id=request.session['admin_id'])
     if not admin:
-        return redirect('/adminLogin')
+        return redirect('/admin_LogReg')
     context = {
         'product': Product.objects.get(id=product_id)
     }
@@ -103,7 +103,7 @@ def view_products(request):
 def edit_product(request, product_id):
     admin = None if 'admin_id' not in request.session else Admin.objects.get(id=request.session['admin_id'])
     if not admin:
-        return redirect('/adminLogin')
+        return redirect('/admin_LogReg')
     context = {
         'product': Product.objects.get(id=product_id)
     }
@@ -133,6 +133,8 @@ def catalogue(request):
     return render(request, 'shop.html', context)
 
 def create_order(request):
+    if request.method != POST:
+        return redirect('/userAccess')
     order = Order.objects.create(
         ordered_products = request.POST['ordered_products'],
         ordered_by = User.objects.get(id=request.session['user_id'])
@@ -143,12 +145,7 @@ def create_order(request):
     user = User.objects.get(id=request.session['user_id'])
     user_orders = Order.objects.filter(ordered_by=user.id)
     other_orders = Order.objects.exclude(ordered_by=user.id)
-    context = {
-        "user": user,
-        "user_orders": user_orders,
-        "other_orders": other_orders
-    }
-    return render(request, 'cart.html', context)
+    return redirect('/cart')
     
 def cart(request):
     if 'user_id' not in request.session:
@@ -167,7 +164,7 @@ def cart(request):
 def edit_order(request, order_id):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
     if not user:
-        return redirect('/userLogin')
+        return redirect('/userAccess')
     context = {
         'order': Order.objects.get(id=order_id)
     }
@@ -178,7 +175,7 @@ def update_order(request, order_id):
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/userLogin')
+        return redirect('/userAccess')
     else:
         if request.method == "POST":
             update_order = Order.objects.get(id=order_id)
@@ -203,7 +200,7 @@ def update_order(request, order_id):
 def delete_order(request, order_id):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
     if not user:
-        return redirect('/userLogin')
+        return redirect('/userAccess')
 
     order = Order.objects.get(id=order_id)
     if order.ordered_by == user:
