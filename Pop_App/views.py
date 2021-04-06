@@ -49,8 +49,12 @@ def admin_register(request):
         request.session['email'] = admin.email
     return render(request, 'adminDash.html')
 
-def admin_login(request):
-    return render(request, 'adminRegister.html')
+def admin_LogReg(request):
+    if request.method == "POST":
+        admin = Admin.objects.register(request.POST)
+        request.session['admin_id'] = admin.id
+        request.session['email'] = admin.email
+    return render(request, 'admin_LogReg.html')
 
 def logout(request):
     request.session.clear()
