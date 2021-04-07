@@ -39,3 +39,8 @@ span.bookInfo{
 img.productDetails{
     max-height: 250px
 }
+
+body{
+    max-width: 1200px;
+    margin: auto;
+}
