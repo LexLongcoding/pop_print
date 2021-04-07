@@ -58,12 +58,12 @@ def admin_LogReg(request):
 
 def logout(request):
     request.session.clear()
-    return redirect('/userLogin')
+    return redirect('/userAccess')
 
 def profile(request):
     user = None if 'user_id' not in request.session else User.objects.get(id=request.session['user_id'])
     if not user:
-        return redirect('/userLogin')
+        return redirect('/userAccess')
     context = {
         'user' : User.objects.get(id=request.session['user_id'])
     }
@@ -141,7 +141,7 @@ def create_order(request):
     )
     order.save()
     if 'user_id' not in request.session:
-        return redirect('/userLogin')
+        return redirect('/userAccess')
     user = User.objects.get(id=request.session['user_id'])
     user_orders = Order.objects.filter(ordered_by=user.id)
     other_orders = Order.objects.exclude(ordered_by=user.id)
